@@ -72,8 +72,17 @@ public abstract class AbstractPage {
 		
 		driver.findElement(inputEmailLogin).sendKeys(mailBox);
 	 
-		click(btnAuthorize);
-		driver.findElement(inputEmailpassword).sendKeys(mailBoxPass);
+		
+		try {
+			driver.findElement(inputEmailpassword).sendKeys(mailBoxPass);
+		} catch (Exception e) {
+			//Вариант страниц авторизаций, где нет изначально поля для ввода пароля
+			//и чтобы оно появилось, необходимо нажать кнопку ВОЙТИ (вот авторизационная такая ЧУШЬ от Яндекса)
+			click(btnAuthorize);
+			driver.findElement(inputEmailpassword).sendKeys(mailBoxPass);
+		}
+		
+		//А затем снова Войти! Тестируем не поддающееся тестированию
 		click(btnAuthorize);
 		
 	}
